@@ -3,29 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Sistem Başlatılıyor</title>
+    <title>Hoş Geldiniz</title>
     <style>
-        /* Tam ekran ve temel ayarlar */
         body, html {
             margin: 0;
             padding: 0;
             width: 100%;
             height: 100%;
             overflow: hidden;
-            background-color: #000;
-            color: white;
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-            -webkit-user-select: none; /* Metin seçmeyi engelle */
-            -ms-user-select: none;
-            user-select: none;
+            -webkit-user-select: none; user-select: none;
         }
-
-        /* Ekranlar arası geçiş için genel yapı */
         .ekran {
-            display: none; /* Tüm ekranlar başta gizli */
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
+            display: none;
             width: 100%;
             height: 100%;
             box-sizing: border-box;
@@ -34,129 +24,138 @@
         /* 1. Giriş Ekranı */
         #girisEkrani {
             display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #000;
+            color: white;
             cursor: pointer;
         }
-        #girisEkrani h1 { font-size: 1.5em; font-weight: 500; }
 
-        /* 2. Xiaomi Açılış Ekranı */
-        #bootEkrani .logo {
-            width: 80px;
-            height: 80px;
-            background-color: #ff6900; /* Xiaomi Turuncusu */
-            -webkit-mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4.5 10.55V15.5h1.9v-4.95h-1.9zm5.35 0V15.5h2v-2.7H14.1v-2.25h-4.25zm11.05-4.5v9.5h-2v-3.7l-2.3 3.7h-1.6l-2.3-3.85V15.5h-1.9V6.05h3l3.25 5.2V6.05h1.85z"/></svg>') no-repeat center;
-            mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4.5 10.55V15.5h1.9v-4.95h-1.9zm5.35 0V15.5h2v-2.7H14.1v-2.25h-4.25zm11.05-4.5v9.5h-2v-3.7l-2.3 3.7h-1.6l-2.3-3.85V15.5h-1.9V6.05h3l3.25 5.2V6.05h1.85z"/></svg>') no-repeat center;
-        }
-        #bootEkrani p {
-            position: absolute;
-            bottom: 30px;
-            font-size: 1em;
-            color: #aaa;
+        /* 2. Kilit Ekranı - RESİM YERİNE GARANTİLİ RENK GEÇİŞİ */
+        #kilitEkrani {
+            /* Hata çıkaran uzun resim kodu yerine bu sade ve şık arka planı koydum */
+            background: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%);
+            display: flex;
+            flex-direction: column;
+            color: white;
+            text-shadow: 0 0 5px rgba(0,0,0,0.7);
         }
 
-        /* 3. Recovery Menüsü */
-        #recoveryEkrani {
-            align-items: flex-start;
-            padding: 20px;
-        }
-        #recoveryEkrani h2 {
-            width: 100%;
-            text-align: center;
-            color: #00bcd4; /* Menü başlığı rengi */
-            margin-bottom: 30px;
+        /* Durum Çubuğu (En Üst) */
+        #durumCubugu {
+            padding: 10px 15px;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            font-size: 0.9em;
             font-weight: 500;
         }
-        #recoveryEkrani .menu-item {
-            font-size: 1.2em;
-            padding: 10px;
-            width: calc(100% - 20px);
-        }
-        #recoveryEkrani .selected {
-            background-color: #0078d4; /* Seçili menü rengi */
-            border-radius: 5px;
-        }
-        #countdown {
-            margin-top: 40px;
-            width: 100%;
-            text-align: center;
-            color: #ffc107;
-            font-size: 1.1em;
+        #durumCubugu svg {
+            width: 16px;
+            height: 16px;
+            fill: white;
+            margin-left: 5px;
         }
 
-        /* 4. Şaka Sonucu */
-        #sakaSonucu { text-align: center; }
-        #sakaSonucu h1 { font-size: 2em; }
-        .emoji { font-size: 5em; }
+        /* Saat ve Tarih */
+        #saatTarih { text-align: center; margin-top: 60px; }
+        #saat { font-size: 6em; font-weight: 200; }
+        #tarih { font-size: 1.2em; font-weight: 400; }
+
+        /* Bildirimler */
+        #bildirimler {
+            width: 90%;
+            margin: 40px auto;
+            background-color: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 10px;
+        }
+        .bildirim {
+            display: flex;
+            align-items: center;
+            padding: 8px;
+            font-size: 0.9em;
+        }
+        .bildirim img { width: 20px; height: 20px; margin-right: 10px; border-radius: 5px; }
+
+        /* Alt Metin */
+        #altMetin {
+            position: absolute;
+            bottom: 30px;
+            width: 100%;
+            text-align: center;
+            font-size: 1em;
+            font-weight: 500;
+        }
     </style>
 </head>
 <body>
 
-    <div id="girisEkrani" class="ekran">
-        <h1>Devam etmek için dokun</h1>
+    <div id="girisEkrani" class="ekran" style="display: flex;">
+        <h1>Temalatı görüntülemek için tıklayın.</h1>
     </div>
 
-    <div id="bootEkrani" class="ekran">
-        <div class="logo"></div>
-        <p>Powered by Android</p>
-    </div>
+    <div id="kilitEkrani" class="ekran">
+        <div id="durumCubugu">
+            <svg viewBox="0 0 24 24"><path d="M1 9l2 2c4.97-4.97 13.03-4.97 18 0l2-2C19.73 5.73 8.27 5.73 4 9zM5 13l2 2c2.76-2.76 7.24-2.76 10 0l2-2C15.14 9.14 8.86 9.14 5 13zM9 17l3 3 3-3c-1.66-1.66-4.34-1.66-6 0z"/></svg>
+            <svg viewBox="0 0 24 24"><path d="M17 1.01L7 1c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-1.99-2-1.99zM17 19H7V5h10v14z"/></svg>
+            <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0016 9.5 6.5 6.5 0 109.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+            <span>%87</span>
+        </div>
 
-    <div id="recoveryEkrani" class="ekran">
-        <h2>Main Menu</h2>
-        <div class="menu-item selected">Reboot</div>
-        <div class="menu-item">Wipe Data</div>
-        <div class="menu-item">Connect with MIAssistant</div>
-        <div id="countdown">Sisteme yeniden başlatılıyor: 10</div>
-    </div>
+        <div id="saatTarih">
+            <div id="saat">14:40</div>
+            <div id="tarih">28 Ağustos Perşembe</div>
+        </div>
 
-    <div id="sakaSonucu" class="ekran">
-        <div class="emoji">😂</div>
-        <h1>ŞAKA KANKA!</h1>
-        <p>Telefonun sapasağlam, rahat ol :)</p>
+        <div id="bildirimler">
+            <div class="bildirim">
+                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAPCAYAAAA71pVKAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAIGNIUk0AAHolAACAgwAA+f8AAIDpAAB1MAAA6mAAADqYAAAXb5JfxUYAAAEwSURBVHjaYvz//z8DJYCJgUJWCiDPgJEYRA04G/7//z/D//8/A8O/b/8ZOJgYGBhYWFj4/19/f3/f9+/fl5WV8f/79+8LFixAbgAxfv78+e/v378sXrz4/fv372NjY0+ePHny5s2bKVOmTBgZGTt37tx58+bN+/fvZ2Bg+P379/+LFy/cunXr6tWrVy9evGhoaMDCwhL8/v37++bNm48dO3bs3r3bwsLCxMTEwMDAyMjImJiYjIyMzczMzMzMzM7OzszMzM/Pz8rKysvLy8vLy8/Pz8jIyMjIyMjIyMjIyMzMzM7OzszMzM/Pz8nJycrKysrKys3Nzc/Pz8vLy8rKysjIyMjIyMjIyMjIyMjMzMzs7OzszMzPz8/JycnKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysoAAAD//wMAUgc0eN24/QoAAAAASUVORK5CYII=">
+                <span><b>WhatsApp</b> &nbsp; 2 yeni mesaj</span>
+            </div>
+            <div class="bildirim">
+                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAPCAYAAAA71pVKAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAIGNIUk0AAHolAACAgwAA+f8AAIDpAAB1MAAA6mAAADqYAAAXb5JfxUYAAAEuSURBVHjaYvz//z8DJYCJgUJWCiDPgJEYRA04G/7//z/D//8/A8O/b/8ZOJgYGBhYWFj4/19/f3/f9+/fl5WV8f/79+8LFixAbgAxfv78+e/v378sXrz4/fv372NjY0+ePHny5s2bKVOmTBgZGTt37tx58+bN+/fvZ2Bg+P379/+LFy/cunXr6tWrVy9evGhoaMDCwhL8/v37++bNm48dO3bs3r3bwsLCxMTEwMDAyMjImJiYjIyMzczMzMzMzM7OzszMzM/Pz8rKysvLy8vLy8/Pz8jIyMjIyMjIyMjIyMzMzM7OzszMzM/Pz8nJycrKysrKys3Nzc/Pz8vLy8rKysjIyMjIyMjIyMjIyMjMzMzs7OzszMzPz8/JycnKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysoAAAD//wMAUgc0eN24/QoAAAAASUVORK5CYII=">
+                <span><b>Instagram</b> &nbsp; birisi gönderinde senden bahsetti</span>
+            </div>
+        </div>
+        
+        <div id="altMetin">Kilidi açmak için yukarı kaydırın</div>
     </div>
     
     <script>
-        // Tüm ekranları değişkenlere ata
         const girisEkrani = document.getElementById('girisEkrani');
-        const bootEkrani = document.getElementById('bootEkrani');
-        const recoveryEkrani = document.getElementById('recoveryEkrani');
-        const sakaSonucu = document.getElementById('sakaSonucu');
+        const kilitEkrani = document.getElementById('kilitEkrani');
         const bodyElement = document.documentElement;
 
-        // Giriş ekranına dokunulduğunda...
+        function saatiGuncelle() {
+            const simdi = new Date();
+            const saat = simdi.getHours().toString().padStart(2, '0');
+            const dakika = simdi.getMinutes().toString().padStart(2, '0');
+            const gunler = ["Pazar", "Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma", "Cumartesi"];
+            const aylar = ["Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran", "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"];
+            const gunAdi = gunler[simdi.getDay()];
+            const ayAdi = aylar[simdi.getMonth()];
+            const gunNumarasi = simdi.getDate();
+            document.getElementById('saat').textContent = `${saat}:${dakika}`;
+            document.getElementById('tarih').textContent = `${gunNumarasi} ${ayAdi} ${gunAdi}`;
+        }
+
         girisEkrani.addEventListener('click', () => {
-            // 1. Tam ekran modunu iste
             if (bodyElement.requestFullscreen) {
-                bodyElement.requestFullscreen().catch(err => {
-                    // Tam ekran hatası olursa bile devam et
-                    console.log(`Tam ekran hatası: ${err.message}`);
-                });
+                bodyElement.requestFullscreen().catch(err => console.log(err.message));
             }
-
-            // 2. Giriş ekranını gizle, açılış ekranını göster
             girisEkrani.style.display = 'none';
-            bootEkrani.style.display = 'flex';
-
-            // 3. Birkaç saniye bekle (açılış animasyonu gibi)
+            kilitEkrani.style.display = 'flex';
+            saatiGuncelle();
+            setInterval(saatiGuncelle, 1000);
             setTimeout(() => {
-                // 4. Açılış ekranını gizle, recovery menüsünü göster
-                bootEkrani.style.display = 'none';
-                recoveryEkrani.style.display = 'flex';
-                
-                // 5. Recovery ekranında geri sayımı başlat
-                let saniye = 10;
-                const countdownElement = document.getElementById('countdown');
-                const timer = setInterval(() => {
-                    saniye--;
-                    countdownElement.textContent = 'Sistem yeniden başlatılıyor: ' + saniye;
-                    if (saniye <= 0) {
-                        clearInterval(timer);
-                        // 6. Geri sayım bitince şakayı göster
-                        recoveryEkrani.style.display = 'none';
-                        sakaSonucu.style.display = 'flex';
-                    }
-                }, 1000); // Her saniye
-            }, 4000); // 4 saniye bekleme süresi
+                alert("PANİK YOK KANKA! :) Telefonun kilitlenmedi, bu sadece bir şakaydı.");
+                if (document.exitFullscreen) document.exitFullscreen();
+                document.body.innerHTML = '<h1 style="font-size: 2em; text-align: center; margin-top: 50px; cursor: auto; color: black;">Yedin mi şakayı? 😂</h1>';
+            }, 25000);
         });
     </script>
-
 </body>
 </html>
