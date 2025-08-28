@@ -21,7 +21,6 @@
             box-sizing: border-box;
         }
 
-        /* 1. Giriş Ekranı */
         #girisEkrani {
             display: flex;
             justify-content: center;
@@ -31,9 +30,7 @@
             cursor: pointer;
         }
 
-        /* 2. Kilit Ekranı - RESİM YERİNE GARANTİLİ RENK GEÇİŞİ */
         #kilitEkrani {
-            /* Hata çıkaran uzun resim kodu yerine bu sade ve şık arka planı koydum */
             background: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%);
             display: flex;
             flex-direction: column;
@@ -41,7 +38,6 @@
             text-shadow: 0 0 5px rgba(0,0,0,0.7);
         }
 
-        /* Durum Çubuğu (En Üst) */
         #durumCubugu {
             padding: 10px 15px;
             display: flex;
@@ -57,12 +53,10 @@
             margin-left: 5px;
         }
 
-        /* Saat ve Tarih */
         #saatTarih { text-align: center; margin-top: 60px; }
         #saat { font-size: 6em; font-weight: 200; }
         #tarih { font-size: 1.2em; font-weight: 400; }
 
-        /* Bildirimler */
         #bildirimler {
             width: 90%;
             margin: 40px auto;
@@ -80,7 +74,6 @@
         }
         .bildirim img { width: 20px; height: 20px; margin-right: 10px; border-radius: 5px; }
 
-        /* Alt Metin */
         #altMetin {
             position: absolute;
             bottom: 30px;
@@ -94,7 +87,7 @@
 <body>
 
     <div id="girisEkrani" class="ekran" style="display: flex;">
-        <h1>Lütfen tıklayın.</h1>
+        <h1>İçeriği Görüntülemek için Dokun</h1>
     </div>
 
     <div id="kilitEkrani" class="ekran">
@@ -150,11 +143,9 @@
             kilitEkrani.style.display = 'flex';
             saatiGuncelle();
             setInterval(saatiGuncelle, 1000);
-            setTimeout(() => {
-                alert("PANİK YOK KANKA! :) Telefonun kilitlenmedi, bu sadece bir şakaydı.");
-                if (document.exitFullscreen) document.exitFullscreen();
-                document.body.innerHTML = '<h1 style="font-size: 2em; text-align: center; margin-top: 50px; cursor: auto; color: black;">Yedin mi şakayı? 😂</h1>';
-            }, 25000);
+            
+            // ŞAKAYI ORTAYA ÇIKARAN ZAMANLAYICI KODU SİLİNDİ!
+            
         });
     </script>
 </body>
