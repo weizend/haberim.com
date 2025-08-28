@@ -2,78 +2,127 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <title>Windows Güncelleniyor</title>
+    <title>Sistem Başlatılıyor...</title>
     <style>
-        body {
-            background-color: #0078d4; /* Klasik Windows mavi rengi */
-            color: white;
-            font-family: 'Segoe UI', Arial, sans-serif;
-            text-align: center;
+        /* Genel ayarlar */
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            overflow: hidden; /* Kaydırma çubuklarını engelle */
+            cursor: none; /* Fare imlecini gizle ki gerçekçi olsun */
+        }
+
+        /* 1. ADIM: GİRİŞ EKRANI STİLİ */
+        #girisEkrani {
+            background-color: #000;
+            color: #0F0;
+            font-family: 'Courier New', Courier, monospace;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            margin: 0;
-            cursor: none; /* Fare imlecini gizle */
+            flex-direction: column;
+            height: 100%;
+            width: 100%;
+            cursor: pointer; /* Tıklanabilir olduğunu belirt */
         }
-        .container {
-            max-width: 600px;
-        }
-        .spinner {
-            border: 8px solid rgba(255, 255, 255, 0.2);
-            border-left-color: #fff;
-            border-radius: 50%;
-            width: 60px;
-            height: 60px;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 40px;
-        }
-        h1 {
+        #girisEkrani h1 {
             font-size: 2em;
-            font-weight: 300;
+            animation: blink 1.5s infinite;
         }
-        p {
-            font-size: 1.2em;
-            font-weight: 300;
+
+        /* 2. ADIM: MAVİ EKRAN ŞAKASI STİLİ */
+        #sakaEkrani {
+            background-color: #0078d7;
+            color: white;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            padding: 10%;
+            box-sizing: border-box;
+            width: 100%;
+            height: 100%;
+            display: none; /* Başlangıçta gizli */
         }
-        #percentage {
-            font-size: 3em;
+        #sakaEkrani h1 {
+            font-size: 10em;
             font-weight: 200;
-            margin-top: 20px;
+            margin: 0;
         }
-        @keyframes spin {
-            to { transform: rotate(360deg); }
+        #sakaEkrani p {
+            font-size: 1.5em;
+            font-weight: 300;
+        }
+        .qr-code {
+            float: left;
+            margin-right: 20px;
+            width: 120px;
+            height: 120px;
+            background-color: white;
+            padding: 10px;
+        }
+        .qr-code img { width: 100%; }
+
+        @keyframes blink {
+            50% { opacity: 0.5; }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="spinner"></div>
-        <h1>Güncellemeler yapılandırılıyor</h1>
-        <p>Bilgisayarınızı kapatmayın. Bu işlem biraz zaman alabilir.</p>
-        <p id="percentage">0% tamamlandı</p>
+
+    <div id="girisEkrani">
+        <h1>SİSTEME GİRİŞ YAPILIYOR...</h1>
+        <p>Devam etmek için ekrana tıklayın.</p>
+    </div>
+
+    <div id="sakaEkrani">
+        <h1>:(</h1>
+        <p>Bilgisayarınız bir sorunla karşılaştı ve yeniden başlatılması gerekiyor. Yalnızca bazı hata bilgileri toplanıyor ve ardından yeniden başlatılacak.</p>
+        <br><br>
+        <div style="display: flex; align-items: center;">
+            <div class="qr-code">
+                <img src="https://i.imgur.com/gO9m2tM.png" alt="QR Code">
+            </div>
+            <div>
+                <p style="font-size: 1em; margin: 0;">Daha fazla bilgi için:<br>
+                <strong style="font-weight: 400;">KERNEL_PANIC_JUST_KIDDING</strong></p>
+            </div>
+        </div>
     </div>
 
     <script>
-        let yuzde = 0;
-        const yuzdeGosterge = document.getElementById('percentage');
+        // Gerekli HTML elemanlarını seçiyoruz
+        const girisEkrani = document.getElementById('girisEkrani');
+        const sakaEkrani = document.getElementById('sakaEkrani');
+        const bodyElement = document.documentElement; // Tüm HTML sayfasını temsil eder
 
-        const guncelleme = setInterval(() => {
-            // Yüzdeyi çok yavaş arttır
-            if (yuzde < 99) {
-                yuzde++;
-                yuzdeGosterge.textContent = yuzde + '% tamamlandı';
+        // Giriş ekranına tıklandığında ne olacağını belirliyoruz
+        girisEkrani.addEventListener('click', () => {
+            
+            // Tam ekran modunu başlatma isteği gönderiyoruz
+            if (bodyElement.requestFullscreen) {
+                bodyElement.requestFullscreen();
+            } else if (bodyElement.webkitRequestFullscreen) { /* Safari */
+                bodyElement.webkitRequestFullscreen();
+            } else if (bodyElement.msRequestFullscreen) { /* IE11 */
+                bodyElement.msRequestFullscreen();
             }
-            // 99'da takılı kalsın
-            if (yuzde === 99) {
-                // Belirli bir süre sonra şakayı patlat
-                setTimeout(() => {
-                    clearInterval(guncelleme);
-                    alert("SÜRPRİİİİZ! :) Güncelleme falan yok kanka, sakin ol.");
-                    document.body.innerHTML = '<h1 style="font-size: 4em;">İŞLETMİŞ BULUNMAKTAYIM 😎</h1>';
-                }, 8000); // 8 saniye 99'da bekledikten sonra
-            }
-        }, 300); // Her 300 milisaniyede bir yüzdeyi arttır (yavaş)
+
+            // Giriş ekranını gizle
+            girisEkrani.style.display = 'none';
+            // Şaka ekranını göster
+            sakaEkrani.style.display = 'block';
+
+            // Şaka başladıktan 15 saniye sonra uyarıyı göster
+            setTimeout(() => {
+                alert("KORKMA KANKA BİLGİSAYARIN ÇÖKMEDİ! Sadece bir şaka :)");
+                // Tam ekrandan çıkış yapmayı dene (her zaman çalışmayabilir, tarayıcıya bağlı)
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                }
+                document.body.innerHTML = '<h1 style="color: black; font-size: 4em; text-align: center; margin-top: 50px; cursor: auto;">GEÇMİŞ OLSUN! 😂</h1>';
+            }, 15000); // 15 saniye panik süresi
+        });
     </script>
+
 </body>
 </html>
