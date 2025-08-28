@@ -2,84 +2,78 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SİSTEM UYARISI!</title>
+    <title>Windows Güncelleniyor</title>
     <style>
-        /* Sayfanın genel stilini belirliyoruz (CSS Kodları) */
         body {
-            background-color: #000; /* Arka plan siyah */
-            color: #0F0; /* Yazı rengi parlak yeşil (hacker ekranı gibi) */
-            font-family: 'Courier New', Courier, monospace; /* Yazı tipi */
+            background-color: #0078d4; /* Klasik Windows mavi rengi */
+            color: white;
+            font-family: 'Segoe UI', Arial, sans-serif;
             text-align: center;
-            margin: 0;
-            padding: 20px;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            overflow: hidden; /* Kaydırma çubuklarını gizle */
+            margin: 0;
+            cursor: none; /* Fare imlecini gizle */
         }
-
         .container {
-            max-width: 800px;
+            max-width: 600px;
         }
-
+        .spinner {
+            border: 8px solid rgba(255, 255, 255, 0.2);
+            border-left-color: #fff;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 40px;
+        }
         h1 {
-            font-size: 3em;
-            text-shadow: 0 0 10px #0F0;
-            animation: blink 1s infinite; /* Başlığın yanıp sönmesi için animasyon */
+            font-size: 2em;
+            font-weight: 300;
         }
-
         p {
             font-size: 1.2em;
+            font-weight: 300;
         }
-
-        #countdown {
-            font-size: 2em;
-            color: #FF0000; /* Geri sayım kırmızı renk */
-            font-weight: bold;
+        #percentage {
+            font-size: 3em;
+            font-weight: 200;
+            margin-top: 20px;
         }
-
-        /* Yanıp sönme animasyonu */
-        @keyframes blink {
-            50% {
-                opacity: 0.5;
-            }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>HACKLENDİN!</h1>
-        <p>Yaşar Görgüş, Tüm kişisel verilerin, fotoğrafların ve sosyal medya hesapların ele geçirildi.</p>
-        <p>Telefonundaki tüm dosyalar silinmeden önceki son saniyeler:</p>
-        <p id="countdown">15</p>
-        <p>IP Adresin: 192.168.1.1</p>
+        <div class="spinner"></div>
+        <h1>Güncellemeler yapılandırılıyor</h1>
+        <p>Bilgisayarınızı kapatmayın. Bu işlem biraz zaman alabilir.</p>
+        <p id="percentage">0% tamamlandı</p>
     </div>
 
     <script>
-        // Geri sayımın başlayacağı saniyeyi belirliyoruz
-        let saniye = 15;
-        
-        // HTML'deki "countdown" id'li elemanı seçiyoruz
-        const countdownElement = document.getElementById('countdown');
+        let yuzde = 0;
+        const yuzdeGosterge = document.getElementById('percentage');
 
-        // Her saniye çalışacak bir zamanlayıcı başlatıyoruz
-        const timer = setInterval(() => {
-            saniye--; // Saniyeyi bir azalt
-            countdownElement.textContent = saniye; // Azalan saniyeyi ekrana yazdır
-
-            // Eğer saniye 0 veya daha az olursa...
-            if (saniye <= 0) {
-                clearInterval(timer); // Zamanlayıcıyı durdur
-                
-                // Şaka mesajını göster!
-                alert("ŞAKA YAPTIM KANKA! :) Rahat bir nefes alabilirsin.");
-                
-                // İstersen sayfayı da temizleyebilirsin
-                document.body.innerHTML = '<div style="font-size: 5em;">😂</div><h1>Sadece bir şakaydı!</h1>';
+        const guncelleme = setInterval(() => {
+            // Yüzdeyi çok yavaş arttır
+            if (yuzde < 99) {
+                yuzde++;
+                yuzdeGosterge.textContent = yuzde + '% tamamlandı';
             }
-        }, 1000); // 1000 milisaniye = 1 saniye
+            // 99'da takılı kalsın
+            if (yuzde === 99) {
+                // Belirli bir süre sonra şakayı patlat
+                setTimeout(() => {
+                    clearInterval(guncelleme);
+                    alert("SÜRPRİİİİZ! :) Güncelleme falan yok kanka, sakin ol.");
+                    document.body.innerHTML = '<h1 style="font-size: 4em;">İŞLETMİŞ BULUNMAKTAYIM 😎</h1>';
+                }, 8000); // 8 saniye 99'da bekledikten sonra
+            }
+        }, 300); // Her 300 milisaniyede bir yüzdeyi arttır (yavaş)
     </script>
 </body>
 </html>
