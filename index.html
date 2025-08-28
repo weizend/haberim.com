@@ -2,125 +2,159 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <title>Sistem Başlatılıyor...</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Sistem Başlatılıyor</title>
     <style>
-        /* Genel ayarlar */
+        /* Tam ekran ve temel ayarlar */
         body, html {
             margin: 0;
             padding: 0;
-            height: 100%;
             width: 100%;
-            overflow: hidden; /* Kaydırma çubuklarını engelle */
-            cursor: none; /* Fare imlecini gizle ki gerçekçi olsun */
+            height: 100%;
+            overflow: hidden;
+            background-color: #000;
+            color: white;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            -webkit-user-select: none; /* Metin seçmeyi engelle */
+            -ms-user-select: none;
+            user-select: none;
         }
 
-        /* 1. ADIM: GİRİŞ EKRANI STİLİ */
-        #girisEkrani {
-            background-color: #000;
-            color: #0F0;
-            font-family: 'Courier New', Courier, monospace;
-            display: flex;
+        /* Ekranlar arası geçiş için genel yapı */
+        .ekran {
+            display: none; /* Tüm ekranlar başta gizli */
             justify-content: center;
             align-items: center;
             flex-direction: column;
-            height: 100%;
             width: 100%;
-            cursor: pointer; /* Tıklanabilir olduğunu belirt */
-        }
-        #girisEkrani h1 {
-            font-size: 2em;
-            animation: blink 1.5s infinite;
-        }
-
-        /* 2. ADIM: MAVİ EKRAN ŞAKASI STİLİ */
-        #sakaEkrani {
-            background-color: #0078d7;
-            color: white;
-            font-family: 'Segoe UI', Arial, sans-serif;
-            padding: 10%;
+            height: 100%;
             box-sizing: border-box;
-            width: 100%;
-            height: 100%;
-            display: none; /* Başlangıçta gizli */
         }
-        #sakaEkrani h1 {
-            font-size: 10em;
-            font-weight: 200;
-            margin: 0;
-        }
-        #sakaEkrani p {
-            font-size: 1.5em;
-            font-weight: 300;
-        }
-        .qr-code {
-            float: left;
-            margin-right: 20px;
-            width: 120px;
-            height: 120px;
-            background-color: white;
-            padding: 10px;
-        }
-        .qr-code img { width: 100%; }
 
-        @keyframes blink {
-            50% { opacity: 0.5; }
+        /* 1. Giriş Ekranı */
+        #girisEkrani {
+            display: flex;
+            cursor: pointer;
         }
+        #girisEkrani h1 { font-size: 1.5em; font-weight: 500; }
+
+        /* 2. Xiaomi Açılış Ekranı */
+        #bootEkrani .logo {
+            width: 80px;
+            height: 80px;
+            background-color: #ff6900; /* Xiaomi Turuncusu */
+            -webkit-mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4.5 10.55V15.5h1.9v-4.95h-1.9zm5.35 0V15.5h2v-2.7H14.1v-2.25h-4.25zm11.05-4.5v9.5h-2v-3.7l-2.3 3.7h-1.6l-2.3-3.85V15.5h-1.9V6.05h3l3.25 5.2V6.05h1.85z"/></svg>') no-repeat center;
+            mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4.5 10.55V15.5h1.9v-4.95h-1.9zm5.35 0V15.5h2v-2.7H14.1v-2.25h-4.25zm11.05-4.5v9.5h-2v-3.7l-2.3 3.7h-1.6l-2.3-3.85V15.5h-1.9V6.05h3l3.25 5.2V6.05h1.85z"/></svg>') no-repeat center;
+        }
+        #bootEkrani p {
+            position: absolute;
+            bottom: 30px;
+            font-size: 1em;
+            color: #aaa;
+        }
+
+        /* 3. Recovery Menüsü */
+        #recoveryEkrani {
+            align-items: flex-start;
+            padding: 20px;
+        }
+        #recoveryEkrani h2 {
+            width: 100%;
+            text-align: center;
+            color: #00bcd4; /* Menü başlığı rengi */
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+        #recoveryEkrani .menu-item {
+            font-size: 1.2em;
+            padding: 10px;
+            width: calc(100% - 20px);
+        }
+        #recoveryEkrani .selected {
+            background-color: #0078d4; /* Seçili menü rengi */
+            border-radius: 5px;
+        }
+        #countdown {
+            margin-top: 40px;
+            width: 100%;
+            text-align: center;
+            color: #ffc107;
+            font-size: 1.1em;
+        }
+
+        /* 4. Şaka Sonucu */
+        #sakaSonucu { text-align: center; }
+        #sakaSonucu h1 { font-size: 2em; }
+        .emoji { font-size: 5em; }
     </style>
 </head>
 <body>
 
-    <div id="girisEkrani">
-        <h1>SİSTEME GİRİŞ YAPILIYOR...</h1>
-        <p>Devam etmek için ekrana tıklayın.</p>
+    <div id="girisEkrani" class="ekran">
+        <h1>Devam etmek için dokun</h1>
     </div>
 
-    <div id="sakaEkrani">
-        <h1>:(</h1>
-        <p>Bilgisayarınız bir sorunla karşılaştı ve yeniden başlatılması gerekiyor. Yalnızca bazı hata bilgileri toplanıyor ve ardından yeniden başlatılacak.</p>
-        <br><br>
-        <div style="display: flex; align-items: center;">
-            <div class="qr-code">
-                <img src="https://i.imgur.com/gO9m2tM.png" alt="QR Code">
-            </div>
-            <div>
-                <p style="font-size: 1em; margin: 0;">Daha fazla bilgi için:<br>
-                <strong style="font-weight: 400;">KERNEL_PANIC_JUST_KIDDING</strong></p>
-            </div>
-        </div>
+    <div id="bootEkrani" class="ekran">
+        <div class="logo"></div>
+        <p>Powered by Android</p>
     </div>
 
+    <div id="recoveryEkrani" class="ekran">
+        <h2>Main Menu</h2>
+        <div class="menu-item selected">Reboot</div>
+        <div class="menu-item">Wipe Data</div>
+        <div class="menu-item">Connect with MIAssistant</div>
+        <div id="countdown">Sisteme yeniden başlatılıyor: 10</div>
+    </div>
+
+    <div id="sakaSonucu" class="ekran">
+        <div class="emoji">😂</div>
+        <h1>ŞAKA KANKA!</h1>
+        <p>Telefonun sapasağlam, rahat ol :)</p>
+    </div>
+    
     <script>
-        // Gerekli HTML elemanlarını seçiyoruz
+        // Tüm ekranları değişkenlere ata
         const girisEkrani = document.getElementById('girisEkrani');
-        const sakaEkrani = document.getElementById('sakaEkrani');
-        const bodyElement = document.documentElement; // Tüm HTML sayfasını temsil eder
+        const bootEkrani = document.getElementById('bootEkrani');
+        const recoveryEkrani = document.getElementById('recoveryEkrani');
+        const sakaSonucu = document.getElementById('sakaSonucu');
+        const bodyElement = document.documentElement;
 
-        // Giriş ekranına tıklandığında ne olacağını belirliyoruz
+        // Giriş ekranına dokunulduğunda...
         girisEkrani.addEventListener('click', () => {
-            
-            // Tam ekran modunu başlatma isteği gönderiyoruz
+            // 1. Tam ekran modunu iste
             if (bodyElement.requestFullscreen) {
-                bodyElement.requestFullscreen();
-            } else if (bodyElement.webkitRequestFullscreen) { /* Safari */
-                bodyElement.webkitRequestFullscreen();
-            } else if (bodyElement.msRequestFullscreen) { /* IE11 */
-                bodyElement.msRequestFullscreen();
+                bodyElement.requestFullscreen().catch(err => {
+                    // Tam ekran hatası olursa bile devam et
+                    console.log(`Tam ekran hatası: ${err.message}`);
+                });
             }
 
-            // Giriş ekranını gizle
+            // 2. Giriş ekranını gizle, açılış ekranını göster
             girisEkrani.style.display = 'none';
-            // Şaka ekranını göster
-            sakaEkrani.style.display = 'block';
+            bootEkrani.style.display = 'flex';
 
-            // Şaka başladıktan 15 saniye sonra uyarıyı göster
+            // 3. Birkaç saniye bekle (açılış animasyonu gibi)
             setTimeout(() => {
-                alert("KORKMA KANKA BİLGİSAYARIN ÇÖKMEDİ! Sadece bir şaka :)");
-                // Tam ekrandan çıkış yapmayı dene (her zaman çalışmayabilir, tarayıcıya bağlı)
-                if (document.exitFullscreen) {
-                    document.exitFullscreen();
-                }
-                document.body.innerHTML = '<h1 style="color: black; font-size: 4em; text-align: center; margin-top: 50px; cursor: auto;">GEÇMİŞ OLSUN! 😂</h1>';
-            }, 15000); // 15 saniye panik süresi
+                // 4. Açılış ekranını gizle, recovery menüsünü göster
+                bootEkrani.style.display = 'none';
+                recoveryEkrani.style.display = 'flex';
+                
+                // 5. Recovery ekranında geri sayımı başlat
+                let saniye = 10;
+                const countdownElement = document.getElementById('countdown');
+                const timer = setInterval(() => {
+                    saniye--;
+                    countdownElement.textContent = 'Sistem yeniden başlatılıyor: ' + saniye;
+                    if (saniye <= 0) {
+                        clearInterval(timer);
+                        // 6. Geri sayım bitince şakayı göster
+                        recoveryEkrani.style.display = 'none';
+                        sakaSonucu.style.display = 'flex';
+                    }
+                }, 1000); // Her saniye
+            }, 4000); // 4 saniye bekleme süresi
         });
     </script>
 
